@@ -1,0 +1,163 @@
+<!-- Hero Section with Search -->
+<section class="hero">
+  <div class="hero-background"></div>
+  <div class="hero-content">
+    <h2 class="hero-title">Encuentra tu próximo vehículo</h2>
+    <p class="hero-subtitle">Más de 66,000 visitantes diarios confían en nosotros</p>
+    
+    <form class="search-form" (ngSubmit)="onSearch()">
+      <div class="search-grid">
+        <div class="form-group">
+          <label>Estado</label>
+          <select 
+            [value]="searchForm().state" 
+            (change)="updateSearchField('state', $any($event.target).value)" 
+            class="form-input">
+            <option value="">Cualquiera</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="usado">Usado</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Marca</label>
+          <input 
+            type="text" 
+            [value]="searchForm().brand" 
+            (input)="updateSearchField('brand', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="Ej: Toyota">
+        </div>
+        
+        <div class="form-group">
+          <label>Modelo</label>
+          <input 
+            type="text" 
+            [value]="searchForm().model" 
+            (input)="updateSearchField('model', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="Ej: Corolla">
+        </div>
+        
+        <div class="form-group">
+          <label>Año desde</label>
+          <input 
+            type="number" 
+            [value]="searchForm().yearFrom" 
+            (input)="updateSearchField('yearFrom', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="2010">
+        </div>
+        
+        <div class="form-group">
+          <label>Año hasta</label>
+          <input 
+            type="number" 
+            [value]="searchForm().yearTo" 
+            (input)="updateSearchField('yearTo', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="2024">
+        </div>
+        
+        <div class="form-group">
+          <label>Precio hasta (RD$)</label>
+          <input 
+            type="number" 
+            [value]="searchForm().priceTo" 
+            (input)="updateSearchField('priceTo', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="RD$">
+        </div>
+        
+        <div class="form-group">
+          <label>Lugar</label>
+          <input 
+            type="text" 
+            [value]="searchForm().location" 
+            (input)="updateSearchField('location', $any($event.target).value)" 
+            class="form-input" 
+            placeholder="Santo Domingo">
+        </div>
+        
+        <button type="submit" class="search-button">
+          <span>Buscar</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </div>
+      @if (isSearching()) {
+        <div class="clear-search">
+          <button type="button" (click)="clearSearch()" class="clear-button">Limpiar búsqueda</button>
+        </div>
+      }
+    </form>
+  </div>
+</section>
+
+<!-- Vehicle Types -->
+<section class="vehicle-types">
+  <div class="container">
+    <h3 class="section-title">Explora por tipo</h3>
+    <div class="types-grid">
+      @for (type of vehicleTypes; track type.name) {
+        <div class="type-card" (click)="filterByType(type.name)">
+          <div class="type-icon">
+            <div [innerHTML]="getVehicleIcon(type.name)" class="vehicle-svg"></div>
+          </div>
+          <h4>{{ type.name }}</h4>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Listings -->
+<section class="listings">
+  <div class="container">
+    <div class="section-header">
+      <h3 class="section-title">{{ isSearching() ? 'Resultados de búsqueda' : 'Anuncios recientes' }}</h3>
+      @if (isSearching()) {
+        <span class="results-count">{{ searchResultsCount() }} vehículo(s) encontrado(s)</span>
+      }
+    </div>
+    
+    @if (filteredVehicles().length === 0) {
+      <div class="no-results">
+        <p>No se encontraron vehículos con los criterios de búsqueda.</p>
+        <button (click)="clearSearch()" class="clear-button">Ver todos los vehículos</button>
+      </div>
+    }
+    
+    @if (filteredVehicles().length > 0) {
+      <div class="listings-grid">
+        @for (vehicle of filteredVehicles(); track vehicle.id; let i = $index) {
+          <div class="vehicle-card" [style.--index]="i" (click)="viewVehicle(vehicle.id)">
+            <div class="vehicle-image">
+              @if (vehicle.images && vehicle.images.length > 0) {
+                <img [src]="vehicle.images[0]" [alt]="vehicle.brand + ' ' + vehicle.model" class="vehicle-img" loading="lazy">
+              } @else {
+                <div class="image-placeholder">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                  </svg>
+                </div>
+              }
+            </div>
+            <div class="vehicle-info">
+              <div class="vehicle-year">{{ vehicle.year }}</div>
+              <h4 class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</h4>
+              <div class="vehicle-details">
+                <span class="vehicle-type">{{ vehicle.type }}</span>
+                <span class="vehicle-condition">{{ vehicle.condition | vehicleCondition }}</span>
+              </div>
+              <div class="vehicle-price">{{ vehicle.price | priceFormat: vehicle.currency }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

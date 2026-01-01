@@ -1,0 +1,67 @@
+<div class="finance-page">
+  <div class="container">
+    <div class="finance-hero">
+      <h1>Financia tu carro</h1>
+      <p>Calcula tu cuota mensual con nuestra herramienta de financiamiento. Selecciona el valor del vehículo y los años de financiamiento.</p>
+    </div>
+
+    <div class="calculator-section">
+      <div class="calculator-card">
+        <h2>Calculadora de financiamiento</h2>
+        <div class="calculator-form">
+          <div class="form-group">
+            <label>Valor del vehículo (RD$)</label>
+            <input 
+              type="number" 
+              [(ngModel)]="financing.vehiclePrice" 
+              (ngModelChange)="calculateFinancing()"
+              class="form-input"
+              placeholder="0"
+              min="0">
+          </div>
+          
+          <div class="form-group">
+            <label>Años de financiamiento</label>
+            <select 
+              [(ngModel)]="financing.years" 
+              (ngModelChange)="calculateFinancing()"
+              class="form-input">
+              <option *ngFor="let year of financingYears" [value]="year">
+                {{ year }} {{ year === 1 ? 'año' : 'años' }} / {{ year * 12 }} meses
+              </option>
+            </select>
+          </div>
+
+          <div class="rate-info">
+            <p>Tasa de interés anual: <strong>{{ (annualRate * 100).toFixed(1) }}%</strong></p>
+          </div>
+        </div>
+
+        <div class="result-box" *ngIf="financing.monthlyPayment > 0">
+          <div class="result-item">
+            <span class="result-label">Cuota mensual</span>
+            <span class="result-amount">RD$ {{ financing.monthlyPayment.toFixed(2) }}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Total a pagar</span>
+            <span class="result-amount">RD$ {{ financing.totalPayment.toFixed(2) }}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Intereses totales</span>
+            <span class="result-amount">RD$ {{ financing.totalInterest.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Información importante</h3>
+        <ul class="info-list">
+          <li>Los cálculos son estimados y pueden variar según la entidad financiera.</li>
+          <li>Se requiere evaluación crediticia para aprobación del préstamo.</li>
+          <li>Las tasas de interés pueden variar según el perfil crediticio del cliente.</li>
+          <li>Contacta con nosotros para más información sobre opciones de financiamiento.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

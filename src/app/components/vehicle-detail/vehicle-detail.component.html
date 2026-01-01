@@ -1,0 +1,100 @@
+@if (vehicle()) {
+  <div class="vehicle-detail">
+    <div class="container">
+      <button (click)="goBack()" class="back-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Volver
+      </button>
+
+      <div class="detail-content">
+        <div class="detail-image-section">
+          @if (hasImages()) {
+            <div class="main-image-container">
+              <img [src]="currentImage()" [alt]="vehicle()!.brand + ' ' + vehicle()!.model" class="main-image">
+            </div>
+          } @else {
+            <div class="image-placeholder-large">
+              <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                <polygon points="12 15 17 21 7 21 12 15"></polygon>
+              </svg>
+            </div>
+          }
+          
+          @if (hasMultipleImages()) {
+            <div class="image-gallery">
+              @for (image of vehicle()!.images; track image; let i = $index) {
+                <div 
+                  class="gallery-thumb"
+                  [class.active]="i === selectedImageIndex()"
+                  (click)="selectImage(i)">
+                  <img [src]="image" [alt]="'Imagen ' + (i + 1)" loading="lazy">
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="detail-info">
+          <div class="detail-header">
+            <div>
+              <h1 class="vehicle-title">{{ vehicle()!.brand }} {{ vehicle()!.model }}</h1>
+              <div class="vehicle-meta">
+                <span class="year-badge">{{ vehicle()!.year }}</span>
+                <span class="type-badge">{{ vehicle()!.type }}</span>
+                <span class="condition-badge" [class.new]="vehicle()!.condition === 'nuevo'">
+                  {{ vehicle()!.condition | vehicleCondition }}
+                </span>
+              </div>
+            </div>
+            <div class="vehicle-price-large">
+              {{ vehicle()!.price | priceFormat: vehicle()!.currency }}
+            </div>
+          </div>
+
+          <div class="detail-specs">
+            <div class="spec-item">
+              <span class="spec-label">Kilometraje:</span>
+              <span class="spec-value">{{ vehicle()!.mileage?.toLocaleString('es-DO') || 'N/A' }} km</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Ubicación:</span>
+              <span class="spec-value">{{ vehicle()!.location || 'N/A' }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Moneda:</span>
+              <span class="spec-value">{{ vehicle()!.currency }}</span>
+            </div>
+          </div>
+
+          <div class="detail-description">
+            <h3>Descripción</h3>
+            <p>{{ vehicle()!.description || 'Sin descripción disponible.' }}</p>
+          </div>
+
+          @if (hasFeatures()) {
+            <div class="detail-features">
+              <h3>Características</h3>
+              <ul class="features-list">
+                @for (feature of features(); track feature) {
+                  <li>{{ feature }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          <div class="detail-actions">
+            <button class="action-button primary" routerLink="/finance">
+              Financiar este vehículo
+            </button>
+            <button class="action-button secondary">
+              Contactar vendedor
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

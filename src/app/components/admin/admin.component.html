@@ -1,0 +1,191 @@
+<div class="admin-page">
+  <div class="admin-header">
+    <div class="container">
+      <div class="header-content">
+        <h1>Panel de Administración</h1>
+        <div class="header-actions">
+          <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="admin-actions">
+      <button class="add-button" (click)="toggleAddForm()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        {{ showAddForm ? 'Cancelar' : 'Agregar Vehículo' }}
+      </button>
+    </div>
+
+    <div *ngIf="showAddForm" class="add-form-card">
+      <h2>{{ editingVehicle ? 'Editar Vehículo' : 'Nuevo Vehículo' }}</h2>
+      <form (ngSubmit)="saveVehicle()" class="vehicle-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Marca *</label>
+            <input type="text" [(ngModel)]="newVehicle.brand" name="brand" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label>Modelo *</label>
+            <input type="text" [(ngModel)]="newVehicle.model" name="model" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Año</label>
+            <input type="number" [(ngModel)]="newVehicle.year" name="year" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Tipo *</label>
+            <select [(ngModel)]="newVehicle.type" name="type" class="form-input" required>
+              <option value="">Seleccionar</option>
+              <option value="Sedán">Sedán</option>
+              <option value="Compacto">Compacto</option>
+              <option value="Jeepeta">Jeepeta</option>
+              <option value="Camioneta">Camioneta</option>
+              <option value="Coupé/Sport">Coupé/Sport</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Precio</label>
+            <input type="number" [(ngModel)]="newVehicle.price" name="price" class="form-input" min="0">
+          </div>
+          <div class="form-group">
+            <label>Moneda</label>
+            <select [(ngModel)]="newVehicle.currency" name="currency" class="form-input">
+              <option value="RD$">RD$</option>
+              <option value="US$">US$</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kilometraje</label>
+            <input type="number" [(ngModel)]="newVehicle.mileage" name="mileage" class="form-input" min="0">
+          </div>
+          <div class="form-group">
+            <label>Condición</label>
+            <select [(ngModel)]="newVehicle.condition" name="condition" class="form-input">
+              <option value="nuevo">Nuevo</option>
+              <option value="usado">Usado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ubicación</label>
+          <input type="text" [(ngModel)]="newVehicle.location" name="location" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label>Descripción *</label>
+          <textarea 
+            [(ngModel)]="newVehicle.description" 
+            name="description" 
+            class="form-input description-textarea" 
+            rows="6"
+            placeholder="Describe el vehículo en detalle: estado, mantenimientos, características especiales, etc."
+            required></textarea>
+          <small class="form-hint">Proporciona una descripción detallada del vehículo para atraer más compradores.</small>
+        </div>
+
+        <div class="form-group">
+          <label>Imágenes del vehículo</label>
+          <div class="image-upload-section">
+            <div class="image-upload-area">
+              <input 
+                type="file" 
+                id="imageInput" 
+                (change)="onImageSelect($event)" 
+                accept="image/*" 
+                multiple
+                class="image-input">
+              <label for="imageInput" class="image-upload-label">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Haz clic para subir imágenes</span>
+                <small>Máximo 10 imágenes (JPG, PNG, etc.)</small>
+              </label>
+            </div>
+            
+            <div class="image-preview-grid" *ngIf="imagePreviews.length > 0">
+              <div *ngFor="let image of imagePreviews; let i = index" class="image-preview-item">
+                <img [src]="image" alt="Preview" class="preview-image">
+                <button type="button" (click)="removeImage(i)" class="remove-image-button" title="Eliminar imagen">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Características</label>
+          <div class="features-input">
+            <input type="text" [(ngModel)]="newFeature" (keyup.enter)="addFeature()" class="form-input" placeholder="Agregar característica">
+            <button type="button" (click)="addFeature()" class="add-feature-button">Agregar</button>
+          </div>
+          <div class="features-list" *ngIf="newVehicle.features && newVehicle.features.length > 0">
+            <span *ngFor="let feature of newVehicle.features; let i = index" class="feature-tag">
+              {{ feature }}
+              <button type="button" (click)="removeFeature(i)" class="remove-feature">×</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="save-button">Guardar</button>
+          <button type="button" (click)="toggleAddForm()" class="cancel-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="vehicles-list">
+      <h2>Vehículos ({{ vehicles.length }})</h2>
+      <div class="vehicles-grid">
+        <div *ngFor="let vehicle of vehicles" class="vehicle-admin-card">
+          <div class="vehicle-admin-header">
+            <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+            <div class="vehicle-admin-actions">
+              <button (click)="editVehicle(vehicle)" class="edit-button">Editar</button>
+              <button (click)="deleteVehicle(vehicle.id)" class="delete-button">Eliminar</button>
+            </div>
+          </div>
+          <div class="vehicle-admin-info">
+            <div class="info-item">
+              <span class="info-label">Año:</span>
+              <span>{{ vehicle.year }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Tipo:</span>
+              <span>{{ vehicle.type }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Precio:</span>
+              <span class="price">{{ formatPrice(vehicle.price, vehicle.currency) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Condición:</span>
+              <span>{{ vehicle.condition === 'nuevo' ? 'Nuevo' : 'Usado' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

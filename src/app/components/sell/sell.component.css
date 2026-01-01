@@ -1,0 +1,150 @@
+.sell-page {
+  padding: 4rem 0;
+  min-height: 80vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sell-hero {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border: 1px solid #e8eaed;
+  border-radius: 4px;
+  color: #202124;
+  margin-bottom: 3rem;
+}
+
+.sell-hero h1 {
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0;
+}
+
+.hero-text {
+  font-size: 0.9375rem;
+  margin: 0 0 2rem 0;
+  color: #5f6368;
+}
+
+.cta-button {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+  background: #b91c1c;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.tips-section,
+.photo-tips {
+  margin-bottom: 4rem;
+}
+
+.tips-section h2,
+.photo-tips h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #202124;
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.tip-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8eaed;
+  transition: all 0.2s;
+}
+
+.tip-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border-color: #dadce0;
+}
+
+.tip-card h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #202124;
+  margin: 0 0 1rem 0;
+}
+
+.tip-card p {
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.photo-tips-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.tip-item {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.tip-number {
+  width: 40px;
+  height: 40px;
+  background: #dc2626;
+  color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.tip-item h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.tip-item p {
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .sell-hero h1 {
+    font-size: 2rem;
+  }
+
+  .tips-grid,
+  .photo-tips-content {
+    grid-template-columns: 1fr;
+  }
+}

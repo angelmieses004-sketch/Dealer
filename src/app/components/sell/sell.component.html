@@ -1,0 +1,53 @@
+<div class="sell-page">
+  <div class="container">
+    <div class="sell-hero">
+      <h1>Vende tu carro</h1>
+      <p class="hero-text">Prueba tiene más de <strong>66,000 visitantes diarios</strong>. Tu vehículo se vende en horas.</p>
+      <button class="cta-button" routerLink="/admin">Publicar mi vehículo</button>
+    </div>
+
+    <div class="tips-section">
+      <h2>Consejos para vender más rápido</h2>
+      <div class="tips-grid">
+        <div *ngFor="let tip of tips" class="tip-card">
+          <h3>{{ tip.title }}</h3>
+          <p>{{ tip.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-tips">
+      <h2>Consejos para mejorar tus fotos</h2>
+      <div class="photo-tips-content">
+        <div class="tip-item">
+          <span class="tip-number">1</span>
+          <div>
+            <h4>Limpia tu vehículo</h4>
+            <p>Un vehículo limpio se ve mucho mejor en las fotografías.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">2</span>
+          <div>
+            <h4>Buena iluminación</h4>
+            <p>Fotografía durante el día con luz natural para mejores resultados.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">3</span>
+          <div>
+            <h4>Múltiples ángulos</h4>
+            <p>Incluye fotos del frente, laterales, interior y detalles importantes.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">4</span>
+          <div>
+            <h4>Fondo neutro</h4>
+            <p>Evita distracciones en el fondo, usa un espacio limpio y despejado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
