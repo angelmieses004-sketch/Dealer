@@ -11,8 +11,15 @@
       <nav class="nav">
         <a routerLink="/" routerLinkActive="active" class="nav-link">Inicio</a>
         <a routerLink="/finance" routerLinkActive="active" class="nav-link">Financiar</a>
-        <a routerLink="/login" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()">Admin</a>
-        <a routerLink="/admin" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()()">Admin</a>
+        <a routerLink="/favorites" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()">
+          ⭐ Favoritos
+        </a>
+        <a routerLink="/login" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()">Iniciar Sesión</a>
+        <a routerLink="/register" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()">Registrarse</a>
+        <a routerLink="/admin" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && authService.isAdmin()">Admin</a>
+        <button class="nav-link logout-btn" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()" (click)="authService.logout()">
+          Cerrar Sesión
+        </button>
       </nav>
     </div>
   </header>

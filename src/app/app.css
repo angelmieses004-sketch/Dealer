@@ -84,6 +84,19 @@ main {
   width: 100%;
 }
 
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.5rem 0;
+}
+
+.logout-btn:hover {
+  color: #dc2626;
+}
+
 /* Container */
 .container {
   max-width: 1400px;

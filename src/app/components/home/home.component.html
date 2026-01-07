@@ -123,9 +123,17 @@
       }
     </div>
     
-    @if (filteredVehicles().length === 0) {
+    @if (isSearching() && filteredVehicles().length === 0) {
       <div class="no-results">
-        <p>No se encontraron vehículos con los criterios de búsqueda.</p>
+        <div class="no-results-icon">🚗</div>
+        <h3>No se encontraron vehículos</h3>
+        <p>Lo sentimos, no hay vehículos disponibles que coincidan con tu búsqueda.</p>
+        <p class="suggestion">Intenta:</p>
+        <ul>
+          <li>Cambiar los filtros de búsqueda</li>
+          <li>Buscar por marca o modelo diferente</li>
+          <li>Ampliar el rango de precio o año</li>
+        </ul>
         <button (click)="clearSearch()" class="clear-button">Ver todos los vehículos</button>
       </div>
     }
@@ -134,17 +142,29 @@
       <div class="listings-grid">
         @for (vehicle of filteredVehicles(); track vehicle.id; let i = $index) {
           <div class="vehicle-card" [style.--index]="i" (click)="viewVehicle(vehicle.id)">
-            <div class="vehicle-image">
-              @if (vehicle.images && vehicle.images.length > 0) {
-                <img [src]="vehicle.images[0]" [alt]="vehicle.brand + ' ' + vehicle.model" class="vehicle-img" loading="lazy">
-              } @else {
-                <div class="image-placeholder">
-                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
-                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
-                  </svg>
-                </div>
-              }
+            <div class="vehicle-image-container">
+              <div class="vehicle-image">
+                @if (vehicle.images && vehicle.images.length > 0) {
+                  <img [src]="vehicle.images[0]" [alt]="vehicle.brand + ' ' + vehicle.model" class="vehicle-img" loading="lazy">
+                } @else {
+                  <div class="image-placeholder">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                      <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                    </svg>
+                  </div>
+                }
+              </div>
+              <!-- Botón de favoritos -->
+              <button 
+                class="favorite-button"
+                (click)="toggleFavorite($event, vehicle.id)"
+                [class.favorited]="isFavorite(vehicle.id)"
+                title="{{ isFavorite(vehicle.id) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
             </div>
             <div class="vehicle-info">
               <div class="vehicle-year">{{ vehicle.year }}</div>
@@ -161,3 +181,18 @@
     }
   </div>
 </section>
+
+<!-- Modal de autenticación -->
+@if (showAuthModal()) {
+  <div class="auth-modal-overlay" (click)="closeAuthModal()">
+    <div class="auth-modal" (click)="$event.stopPropagation()">
+      <button class="close-modal" (click)="closeAuthModal()">×</button>
+      <h3>Inicia sesión o regístrate</h3>
+      <p>Para guardar vehículos en favoritos, necesitas una cuenta.</p>
+      <div class="modal-actions">
+        <button class="btn-primary" (click)="goToLogin()">Iniciar Sesión</button>
+        <button class="btn-secondary" (click)="goToRegister()">Registrarse</button>
+      </div>
+    </div>
+  </div>
+}

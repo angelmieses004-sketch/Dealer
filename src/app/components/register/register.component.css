@@ -1,4 +1,4 @@
-.login-page {
+.register-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -7,19 +7,19 @@
   padding: 2rem;
 }
 
-.login-container {
+.register-container {
   width: 100%;
   max-width: 450px;
 }
 
-.login-card {
+.register-card {
   background: white;
   border-radius: 24px;
   padding: 3rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-.login-card h1 {
+.register-card h1 {
   font-size: 2rem;
   font-weight: 800;
   color: #1e293b;
@@ -27,13 +27,13 @@
   text-align: center;
 }
 
-.login-subtitle {
+.register-subtitle {
   text-align: center;
   color: #64748b;
   margin: 0 0 2rem 0;
 }
 
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -75,7 +75,7 @@
   text-align: center;
 }
 
-.login-button {
+.register-button {
   padding: 1rem;
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: white;
@@ -88,49 +88,35 @@
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
 }
 
-.login-button:hover:not(:disabled) {
+.register-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
 }
 
-.login-button:disabled {
+.register-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.login-info {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  text-align: center;
-  font-size: 0.875rem;
-  color: #64748b;
-}
-
-.login-info p {
-  margin: 0.25rem 0;
-}
-
-.register-link {
+.login-link {
   margin-top: 1.5rem;
   text-align: center;
 }
 
-.register-link p {
+.login-link p {
   color: #64748b;
   font-size: 0.875rem;
   margin: 0;
 }
 
-.register-link a {
+.login-link a {
   color: #dc2626;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
 }
 
-.register-link a:hover {
+.login-link a:hover {
   color: #b91c1c;
 }
 
@@ -149,3 +135,4 @@
 .back-link a:hover {
   color: #b91c1c;
 }
+

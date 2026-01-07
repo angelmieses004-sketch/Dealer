@@ -354,11 +354,43 @@
 
 .no-results {
   text-align: center;
-  padding: 3rem;
-  background: #f8f9fa;
-  border-radius: 4px;
-  color: #5f6368;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 8px;
   border: 1px solid #e8eaed;
+}
+
+.no-results-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.no-results h3 {
+  font-size: 1.5rem;
+  color: #202124;
+  margin: 0 0 1rem 0;
+}
+
+.no-results p {
+  color: #5f6368;
+  margin: 0.5rem 0;
+}
+
+.no-results .suggestion {
+  font-weight: 600;
+  margin-top: 1.5rem;
+  color: #202124;
+}
+
+.no-results ul {
+  text-align: left;
+  display: inline-block;
+  color: #5f6368;
+  margin: 1rem 0 2rem 0;
+}
+
+.no-results li {
+  margin: 0.5rem 0;
 }
 
 .listings-grid {
@@ -417,10 +449,17 @@
   }
 }
 
-.vehicle-image {
+.vehicle-image-container {
+  position: relative;
   width: 100%;
   height: 200px;
+  overflow: hidden;
   background: #f8f9fa;
+}
+
+.vehicle-image {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -494,6 +533,160 @@
 
 .vehicle-card:hover .vehicle-price {
   transform: scale(1.05);
+}
+
+.favorite-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e8eaed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0;
+  z-index: 10;
+}
+
+.vehicle-card:hover .favorite-button {
+  opacity: 1;
+}
+
+.favorite-button:hover {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+
+.favorite-button svg {
+  width: 20px;
+  height: 20px;
+  stroke: #5f6368;
+  fill: none;
+  transition: all 0.3s;
+}
+
+.favorite-button.favorited svg {
+  fill: #fbbf24;
+  stroke: #f59e0b;
+}
+
+/* Modal de autenticación */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.auth-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #5f6368;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.close-modal:hover {
+  background: #f8f9fa;
+  color: #202124;
+}
+
+.auth-modal h3 {
+  font-size: 1.5rem;
+  color: #202124;
+  margin: 0 0 1rem 0;
+}
+
+.auth-modal p {
+  color: #5f6368;
+  margin: 0 0 1.5rem 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-primary {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #b91c1c;
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #202124;
+  border: 1px solid #e8eaed;
+}
+
+.btn-secondary:hover {
+  background: #e8eaed;
 }
 
 @media (max-width: 768px) {

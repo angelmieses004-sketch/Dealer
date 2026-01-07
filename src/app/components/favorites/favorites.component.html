@@ -1,0 +1,65 @@
+<div class="favorites-page">
+  <div class="container">
+    <div class="favorites-header">
+      <h1>Mis Favoritos</h1>
+      <p class="favorites-count">{{ favoriteVehicles().length }} vehículo(s) guardado(s)</p>
+    </div>
+
+    @if (favoriteVehicles().length === 0) {
+      <div class="no-favorites">
+        <div class="no-favorites-icon">⭐</div>
+        <h2>No tienes favoritos aún</h2>
+        <p>Explora nuestros vehículos y guarda tus favoritos haciendo clic en la estrella.</p>
+        <button class="browse-button" routerLink="/">Explorar Vehículos</button>
+      </div>
+    }
+
+    @if (favoriteVehicles().length > 0) {
+      <div class="favorites-grid">
+        @for (vehicle of favoriteVehicles(); track vehicle.id) {
+          <div class="vehicle-card" (click)="viewVehicle(vehicle.id)">
+            <div class="vehicle-image-container">
+              <div class="vehicle-image">
+                @if (vehicle.images && vehicle.images.length > 0) {
+                  <img [src]="vehicle.images[0]" [alt]="vehicle.brand + ' ' + vehicle.model" loading="lazy">
+                } @else {
+                  <div class="image-placeholder">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                      <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                    </svg>
+                  </div>
+                }
+              </div>
+              <button 
+                class="favorite-button favorited"
+                (click)="removeFavorite($event, vehicle.id)"
+                title="Quitar de favoritos">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="vehicle-info">
+              <div class="vehicle-price">{{ vehicle.price | priceFormat: vehicle.currency }}</div>
+              <h3 class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</h3>
+              <div class="vehicle-details">
+                <span>{{ vehicle.year }}</span>
+                <span>•</span>
+                <span>{{ vehicle.condition | vehicleCondition }}</span>
+                @if (vehicle.type) {
+                  <span>•</span>
+                  <span>{{ vehicle.type }}</span>
+                }
+              </div>
+              @if (vehicle.location) {
+                <div class="vehicle-location">📍 {{ vehicle.location }}</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+

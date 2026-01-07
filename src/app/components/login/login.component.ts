@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,11 +16,17 @@ export class LoginComponent {
   password = '';
   error = '';
   isLoading = false;
+  returnUrl = '/';
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'] || '/';
+    });
+  }
 
   login() {
     this.error = '';
@@ -32,14 +38,22 @@ export class LoginComponent {
       return;
     }
 
-    const success = this.authService.login(this.username, this.password);
-    
-    if (success) {
-      this.router.navigate(['/admin']);
-    } else {
-      this.error = 'Usuario o contraseña incorrectos';
-    }
-    
-    this.isLoading = false;
+    this.authService.login(this.username, this.password).then((success) => {
+      if (success) {
+        const user = this.authService.getCurrentUser();
+        // Si es admin, ir a admin, sino a la página de retorno
+        if (user?.isAdmin) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate([this.returnUrl || '/']);
+        }
+      } else {
+        this.error = 'Usuario o contraseña incorrectos';
+      }
+      this.isLoading = false;
+    }).catch((error) => {
+      this.error = error || 'Error al iniciar sesión';
+      this.isLoading = false;
+    });
   }
 }
