@@ -139,12 +139,109 @@
 }
 
 @media (max-width: 768px) {
-  .sell-hero h1 {
-    font-size: 2rem;
+  .sell-page {
+    padding: 2rem 0;
   }
 
-  .tips-grid,
+  .container {
+    padding: 0 1rem;
+  }
+
+  .sell-hero {
+    padding: 2rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+  }
+
+  .sell-hero h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .hero-text {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 52px;
+    border-radius: 10px;
+  }
+
+  .tips-section,
+  .photo-tips {
+    margin-bottom: 2.5rem;
+  }
+
+  .tips-section h2,
+  .photo-tips h2 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .tip-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e8eaed;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .tip-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
   .photo-tips-content {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tip-item {
+    gap: 1rem;
+  }
+
+  .tip-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1.125rem;
+    border-radius: 8px;
+  }
+
+  .tip-item h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .tip-item p {
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sell-page {
+    padding: 1.5rem 0;
+  }
+
+  .sell-hero {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .sell-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .tips-section h2,
+  .photo-tips h2 {
+    font-size: 1.25rem;
   }
 }

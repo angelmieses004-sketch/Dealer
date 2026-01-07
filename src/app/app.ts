@@ -11,6 +11,7 @@ import { AuthService } from './services/auth.service';
 })
 export class App {
   protected readonly title = signal('Prueba');
+  protected readonly mobileMenuOpen = signal(false);
 
   constructor(
     public authService: AuthService,
@@ -19,5 +20,13 @@ export class App {
 
   isAdminRoute(): boolean {
     return this.router.url.includes('/admin') || this.router.url.includes('/login');
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(open => !open);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
   }
 }

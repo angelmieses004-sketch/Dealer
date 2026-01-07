@@ -1,23 +1,31 @@
 <div class="app-container">
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" *ngIf="mobileMenuOpen()" (click)="closeMobileMenu()"></div>
+  
   <!-- Header -->
   <header class="header" *ngIf="!authService.isLoggedIn()() || !isAdminRoute()">
     <div class="header-content">
       <div class="logo">
-        <a routerLink="/" style="text-decoration: none; color: inherit;">
+        <a routerLink="/" style="text-decoration: none; color: inherit;" (click)="closeMobileMenu()">
           <h1>Prueba</h1>
           <span class="tagline">Encuentra tu vehículo perfecto</span>
         </a>
       </div>
-      <nav class="nav">
-        <a routerLink="/" routerLinkActive="active" class="nav-link">Inicio</a>
-        <a routerLink="/finance" routerLinkActive="active" class="nav-link">Financiar</a>
-        <a routerLink="/favorites" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()">
+      <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen()">
+        <span [class.active]="mobileMenuOpen()"></span>
+        <span [class.active]="mobileMenuOpen()"></span>
+        <span [class.active]="mobileMenuOpen()"></span>
+      </button>
+      <nav class="nav" [class.mobile-open]="mobileMenuOpen()">
+        <a routerLink="/" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Inicio</a>
+        <a routerLink="/finance" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Financiar</a>
+        <a routerLink="/favorites" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()" (click)="closeMobileMenu()">
           ⭐ Favoritos
         </a>
-        <a routerLink="/login" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()">Iniciar Sesión</a>
-        <a routerLink="/register" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()">Registrarse</a>
-        <a routerLink="/admin" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && authService.isAdmin()">Admin</a>
-        <button class="nav-link logout-btn" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()" (click)="authService.logout()">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()" (click)="closeMobileMenu()">Iniciar Sesión</a>
+        <a routerLink="/register" routerLinkActive="active" class="nav-link" *ngIf="!authService.isLoggedIn()()" (click)="closeMobileMenu()">Registrarse</a>
+        <a routerLink="/admin" routerLinkActive="active" class="nav-link" *ngIf="authService.isLoggedIn()() && authService.isAdmin()" (click)="closeMobileMenu()">Admin</a>
+        <button class="nav-link logout-btn" *ngIf="authService.isLoggedIn()() && !authService.isAdmin()" (click)="authService.logout(); closeMobileMenu()">
           Cerrar Sesión
         </button>
       </nav>

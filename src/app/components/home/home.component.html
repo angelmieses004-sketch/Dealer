@@ -103,10 +103,10 @@
     <div class="types-grid">
       @for (type of vehicleTypes; track type.name) {
         <div class="type-card" (click)="filterByType(type.name)">
+          <h4>{{ type.name }}</h4>
           <div class="type-icon">
             <div [innerHTML]="getVehicleIcon(type.name)" class="vehicle-svg"></div>
           </div>
-          <h4>{{ type.name }}</h4>
         </div>
       }
     </div>

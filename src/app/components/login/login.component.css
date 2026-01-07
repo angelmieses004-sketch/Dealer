@@ -149,3 +149,76 @@
 .back-link a:hover {
   color: #b91c1c;
 }
+
+@media (max-width: 768px) {
+  .login-page {
+    padding: 1.5rem 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+    min-height: 100vh;
+  }
+
+  .login-container {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .login-card h1 {
+    font-size: 1.75rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-form {
+    gap: 1.25rem;
+  }
+
+  .form-input {
+    padding: 1rem;
+    font-size: 16px;
+    min-height: 48px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+  }
+
+  .login-button {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 52px;
+    border-radius: 10px;
+  }
+
+  .login-info {
+    padding: 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .register-link p,
+  .back-link a {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .login-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .login-card h1 {
+    font-size: 1.5rem;
+  }
+}
